@@ -6,6 +6,7 @@
 
 #define n_max   2000000
 #define n_min   50000
+#define n_skip (double) 1000.0
 #define ZERO (double) (0.0)
 #define ONE (double) (1.0)
 #define TWO (double) (2.0)
@@ -13,6 +14,12 @@
 #define FOUR (double) (4.0)
 double sqrt_func(double x);
 
+
+/*
+シンプソン則による誤差測定
+a=0,b=1で n_min<n<n_maxの範囲で数値積分を行い解の収束限界点を測定するためのプログラムです
+ただしあまり高精度な計算を
+*/
 void main() {
 	long double  *sum_log_point;
 	sum_log_point =  (long double *)malloc((n_max+1)*sizeof(long double));
@@ -20,17 +27,14 @@ void main() {
 	int cout=0;
 	double h,l,sum,c0,c1,c2;
 	double a=0;
-	n=0;
 	FILE *fp;
 	//h = ONE/n;
 	//l= h/TWO;
 	//sum=ZERO,h=ONE/n,l=h/TWO,c0=l/THREE,c1=TWO*c0c0 = l/THREE;
-	c1 = TWO*c0;
-	c2 =  FOUR * c0;
 	double c=0;
 	double sum_test = M_PI/(long double)4.0;
 	//long double  sum_log[n_max+1];
-        for(cout=n_min;cout<n_max;cout++){
+        for(cout=n_min;cout<n_max;cout=cout+n_skip){
 		n=cout;
 		sum=ZERO;
 		h=ONE/n;
